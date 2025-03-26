@@ -11,8 +11,10 @@ try {
         .status(400)
         .json({success:false, message: error.details[0].message});
        }
-       const task = new Task({ name, description });
-       task.save(); 
+       const task = new Task({ name, description }); 
+       task.status = true;
+       task.save();
+       
        res.status(200)
       .json({success:true, message:'Task created successfuly!'})    
     }   
@@ -21,6 +23,28 @@ try {
 }
 }
 
+exports.verifyTaskCompletion = async (req, res) => {
+  try {
+    const taskId = req.query.id;
+    const task = await Task.findOne({_id: taskId});
+    console.log(task,"task")
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    console.log("task fetched", task)
+    const isCompleted = task.status;
+    if(isCompleted === true){
+     return res.status(200).json({ message: 'Task has been completed' }); 
+    }else{
+     return res.status(500).json({ message: 'Task has not been completed' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};  
+    
 
 exports.getTask = async (req, res) => {
   try {
@@ -83,7 +107,9 @@ exports.updateTask = async (req, res) => {
     res.status(500).json({ message: 'Error deleting task' });
     }
     };
-    
+
+  
+
 
 
 

@@ -14,6 +14,10 @@ const taskSchema = mongoose.Schema({
         type: String,
         required: [true,"Description must be provided"],   
     },
+    status:{
+        type:Boolean,
+        
+    }
     
 },{
     timestamps: true,

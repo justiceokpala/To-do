@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const taskRouter = require('./routers/taskrouter');
+//const taskRouter = require('./routers/taskrouter');
+const arraytaskRouter = require('./routers/arraytaskrouter');
 
 
 
@@ -19,7 +20,7 @@ mongoose
 
 
 
-app.use('/api/task',taskRouter);
+app.use('/api/task',arraytaskRouter);
 app.get('/' , (req, res) =>{
     res.json({message: "hello from the server"})
 })
